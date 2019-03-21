@@ -9,6 +9,8 @@ import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventsourcing.eventstore.EventStorageEngine;
 import org.axonframework.modelling.command.GenericJpaRepository;
 import org.axonframework.modelling.command.Repository;
+import org.axonframework.modelling.saga.repository.SagaStore;
+import org.axonframework.modelling.saga.repository.jpa.JpaSagaStore;
 import org.axonframework.queryhandling.DefaultQueryGateway;
 import org.axonframework.queryhandling.QueryGateway;
 import org.junit.Test;
@@ -44,6 +46,9 @@ public class AxonSimpleApplicationTests {
 	@Autowired(required = false)
 	private EventStorageEngine eventStorageEngine;
 
+	@Autowired(required = false)
+	private SagaStore sagaStore;
+
 	@Test
 	public void contextLoads() {
 		assertThat(repository)
@@ -61,6 +66,9 @@ public class AxonSimpleApplicationTests {
 		assertThat(queryGateway)
 				.isNotNull()
 				.isInstanceOf(DefaultQueryGateway.class);
+		assertThat(sagaStore)
+				.isNotNull()
+				.isInstanceOf(JpaSagaStore.class);
 		// assert that we do not have any EventStorageEngine
 		assertThat(eventStorageEngine).isNull();
 	}

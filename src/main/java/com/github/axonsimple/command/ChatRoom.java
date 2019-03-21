@@ -1,9 +1,6 @@
 package com.github.axonsimple.command;
 
-import com.github.axonsimple.core.CreateRoomCommand;
-import com.github.axonsimple.core.JoinRoomCommand;
-import com.github.axonsimple.core.ParticipantJoinedRoomEvent;
-import com.github.axonsimple.core.RoomCreatedEvent;
+import com.github.axonsimple.core.*;
 import lombok.Data;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventhandling.EventHandler;
@@ -45,11 +42,23 @@ public class ChatRoom {
     }
 
     @CommandHandler
-    public void handle(JoinRoomCommand command) {
+    public void handle(ProcessJoinRoomRequestCommand command) {
+        logger.debug("[Aggregate][Command] Handle command: {}", command);
+        AggregateLifecycle.apply(new ParticipantCheckRequestedEvent(command.getRoomId(), command.getParticipant()));
+    }
+
+    @CommandHandler
+    public void handle(ApproveParticipantCommand command) {
         logger.debug("[Aggregate][Command] Handle command: {}", command);
         if (!participants.contains(command.getParticipant())) {
             AggregateLifecycle.apply(new ParticipantJoinedRoomEvent(command.getParticipant(), command.getRoomId()));
         }
+    }
+
+    @CommandHandler
+    public void handle(RefuseParticipantCommand command) {
+        logger.debug("[Aggregate][Command] Handle command: {}", command);
+        logger.debug("[Aggregate][Command] Refuse participant {}", command.getParticipant());
     }
 
     @EventHandler

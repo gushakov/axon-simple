@@ -4,11 +4,11 @@ import lombok.Value;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Value
-public class JoinRoomCommand {
+public class RefuseParticipantCommand {
 
     @TargetAggregateIdentifier
-    private final String roomId;
-
     private final String participant;
+
+    private final String roomId;
 
 }

@@ -1,7 +1,7 @@
 package com.github.axonsimple.rest;
 
 import com.github.axonsimple.core.CreateRoomCommand;
-import com.github.axonsimple.core.JoinRoomCommand;
+import com.github.axonsimple.core.ProcessJoinRoomRequestCommand;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -27,7 +27,7 @@ public class CommandController {
 
     @PostMapping("/rooms/{roomId}/participants")
     public Future<Void> joinChatRoom(@PathVariable String roomId, @RequestBody @Valid Participant participant) {
-        return commandGateway.send(new JoinRoomCommand(roomId, participant.getName()));
+        return commandGateway.send(new ProcessJoinRoomRequestCommand(roomId, participant.getName()));
     }
 
     @Data
