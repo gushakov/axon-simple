@@ -1,7 +1,6 @@
 package com.github.axonsimple.rest;
 
-import com.github.axonsimple.core.CreateRoomCommand;
-import com.github.axonsimple.core.ProcessJoinRoomRequestCommand;
+import com.github.axonsimple.core.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -27,7 +26,17 @@ public class CommandController {
 
     @PostMapping("/rooms/{roomId}/participants")
     public Future<Void> joinChatRoom(@PathVariable String roomId, @RequestBody @Valid Participant participant) {
-        return commandGateway.send(new ProcessJoinRoomRequestCommand(roomId, participant.getName()));
+        return commandGateway.send(new StartApprovalCommand(roomId, participant.getName()));
+    }
+
+    @PostMapping("/rooms/{roomId}/approve")
+    public Future<Void> approveParticipant(@PathVariable String roomId, @RequestBody @Valid Participant participant) {
+        return commandGateway.send(new FinishApprovalCommand(roomId, participant.getName()));
+    }
+
+    @PostMapping("/rooms/{roomId}/refuse")
+    public Future<Void> refuseParticipant(@PathVariable String roomId, @RequestBody @Valid Participant participant) {
+        return commandGateway.send(new RefuseParticipantCommand(roomId, participant.getName()));
     }
 
     @Data

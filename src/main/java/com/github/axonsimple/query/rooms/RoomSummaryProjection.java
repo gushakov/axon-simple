@@ -1,7 +1,7 @@
 package com.github.axonsimple.query.rooms;
 
 import com.github.axonsimple.core.AllRoomsQuery;
-import com.github.axonsimple.core.ParticipantJoinedRoomEvent;
+import com.github.axonsimple.core.ParticipantJoinedEvent;
 import com.github.axonsimple.core.RoomCreatedEvent;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
@@ -30,7 +30,7 @@ public class RoomSummaryProjection {
     }
 
     @EventHandler
-    public void on(ParticipantJoinedRoomEvent event){
+    public void on(ParticipantJoinedEvent event){
         logger.debug("[Query][Rooms][Event] On event: {}", event);
         Optional<RoomSummary> roomSummary = roomSummaryRepository.findById(event.getRoomId());
 

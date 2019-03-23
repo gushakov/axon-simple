@@ -3,7 +3,7 @@ package com.github.axonsimple.core;
 import lombok.Value;
 
 @Value
-public class ParticipantCheckRequestedEvent {
+public class ApprovalFinishedEvent {
 
     private final String roomId;
 

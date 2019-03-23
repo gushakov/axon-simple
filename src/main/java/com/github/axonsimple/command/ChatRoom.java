@@ -42,16 +42,22 @@ public class ChatRoom {
     }
 
     @CommandHandler
-    public void handle(ProcessJoinRoomRequestCommand command) {
+    public void handle(StartApprovalCommand command) {
         logger.debug("[Aggregate][Command] Handle command: {}", command);
-        AggregateLifecycle.apply(new ParticipantCheckRequestedEvent(command.getRoomId(), command.getParticipant()));
+        AggregateLifecycle.apply(new ApprovalStartedEvent(command.getRoomId(), command.getParticipant()));
+    }
+
+    @CommandHandler
+    public void handle(FinishApprovalCommand command) {
+        logger.debug("[Aggregate][Command] Handle command: {}", command);
+        AggregateLifecycle.apply(new ApprovalFinishedEvent(command.getRoomId(), command.getParticipant()));
     }
 
     @CommandHandler
     public void handle(ApproveParticipantCommand command) {
         logger.debug("[Aggregate][Command] Handle command: {}", command);
         if (!participants.contains(command.getParticipant())) {
-            AggregateLifecycle.apply(new ParticipantJoinedRoomEvent(command.getParticipant(), command.getRoomId()));
+            AggregateLifecycle.apply(new ParticipantJoinedEvent(command.getParticipant(), command.getRoomId()));
         }
     }
 
@@ -69,7 +75,7 @@ public class ChatRoom {
     }
 
     @EventHandler
-    public void on(ParticipantJoinedRoomEvent event) {
+    public void on(ParticipantJoinedEvent event) {
         logger.debug("[Aggregate][Event] On event {}",
                 event.getParticipant(), this.roomId, this.participants.size());
         participants.add(event.getParticipant());

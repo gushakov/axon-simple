@@ -3,10 +3,10 @@ package com.github.axonsimple.core;
 import lombok.Value;
 
 @Value
-public class ParticipantJoinedRoomEvent {
-
-    private final String participant;
+public class ParticipantRefusedEvent {
 
     private final String roomId;
+
+    private final String participant;
 
 }

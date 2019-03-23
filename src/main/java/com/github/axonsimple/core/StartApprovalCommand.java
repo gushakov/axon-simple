@@ -4,7 +4,7 @@ import lombok.Value;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 @Value
-public class RefuseParticipantCommand {
+public class StartApprovalCommand {
 
     @TargetAggregateIdentifier
     private final String roomId;
