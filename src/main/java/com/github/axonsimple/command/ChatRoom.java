@@ -57,7 +57,7 @@ public class ChatRoom {
     public void handle(ApproveParticipantCommand command) {
         logger.debug("[Aggregate][Command] Handle command: {}", command);
         if (!participants.contains(command.getParticipant())) {
-            AggregateLifecycle.apply(new ParticipantJoinedEvent(command.getParticipant(), command.getRoomId()));
+            AggregateLifecycle.apply(new ParticipantJoinedEvent(command.getRoomId(), command.getParticipant()));
         }
     }
 
