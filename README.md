@@ -14,7 +14,7 @@ The difference is that I've tried to simplify some things.
 
 The idea is to see what minimal beans need to be declared to make this scenario work.
 
-- We still need to declare and configure an instance of org.axonframework.commandhandling.SimpleCommandBus`
+- We still need to declare and configure an instance of `org.axonframework.commandhandling.SimpleCommandBus`
 - We also need an instance of `org.axonframework.eventhandling.SimpleEventBus`
 - The rest of the infrastructure is wired by the starter
 
